@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { createBrowserHistory as createHistory } from "history";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-function App() {
+//components
+import TopBar from "./components/TopBar";
+import HomePage from "./components/HomePage";
+import FeedPage from "./components/FeedPage";
+
+//styles
+import GlobalStyles from "./styles/GlobalStyles";
+
+const history = createHistory();
+
+function App({ feedsStore }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router history={history}>
+      <GlobalStyles />
+      <TopBar />
+      <Switch>
+        <Route
+          path="/"
+          exact
+          component={(props) => <HomePage {...props} feedsStore={feedsStore} />}
+        />
+        <Route
+          path="/feed"
+          exact
+          component={(props) => <FeedPage {...props} feedsStore={feedsStore} />}
+        />
+      </Switch>
+    </Router>
   );
 }
 
