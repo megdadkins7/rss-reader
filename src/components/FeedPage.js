@@ -23,6 +23,7 @@ function FeedPage({ feedsStore, location }) {
   const [url, setUrl] = useState("");
   const [listings, setListings] = useState([]);
   const [data, setData] = useState({});
+
   const getListings = async (url) => {
     try {
       const response = await getFeedListing(url);
@@ -42,11 +43,11 @@ function FeedPage({ feedsStore, location }) {
       getListings(url);
       setInitialized(true);
     }
-  });
+  }, [initialized, location.search]);
   return (
     <StyledFeedPage>
       <h1 className="center title">
-        <img src={data.image} /> {data.title}
+        <img src={data.image} alt={data.title} /> {data.title}
       </h1>
       {listings.map((l, i) => {
         return (

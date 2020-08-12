@@ -17,7 +17,7 @@ const schema = yup.object({
     .string()
     .required("URL is required")
     .matches(
-      /(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/,
+      /(https?:\/\/)?([\w-])+\.{1}([a-zA-Z]{2,63})([\\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/,
       "Invalid URL"
     ),
 });
@@ -61,7 +61,7 @@ function HomePage({ feedsStore }) {
       } catch (ex) {}
       setInitialized(true);
     }
-  });
+  }, [initialized, feedsStore]);
   if (redirectToFeed) {
     return (
       <Redirect to={`/feed?${querystring.encode({ url: feedsStore.feed })}`} />
@@ -69,7 +69,7 @@ function HomePage({ feedsStore }) {
   }
   return (
     <StyledHomePage>
-      <p>Hello from HomePage</p>
+      <h1 className="center">RSS Feeds</h1>
     </StyledHomePage>
   );
 }

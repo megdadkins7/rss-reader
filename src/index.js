@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { FeedsStore } from "./store";
+import "mobx-react-lite/batchingForReactDom";
 
 const feedsStore = new FeedsStore();
 ReactDOM.render(

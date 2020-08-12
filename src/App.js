@@ -1,9 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory as createHistory } from "history";
 
 //components
-import TopBar from "./components/TopBar";
+import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import FeedPage from "./components/FeedPage";
 
@@ -16,7 +16,7 @@ function App({ feedsStore }) {
   return (
     <Router history={history}>
       <GlobalStyles />
-      <TopBar />
+      <NavBar />
       <Switch>
         <Route
           path="/"
