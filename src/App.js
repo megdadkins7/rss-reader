@@ -1,6 +1,6 @@
 import React from "react";
-import { createBrowserHistory as createHistory } from "history";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { createBrowserHistory as createHistory } from "history";
 
 //components
 import TopBar from "./components/TopBar";

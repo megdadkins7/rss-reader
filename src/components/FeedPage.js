@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { observer } from "mobx-react";
 import { withRouter } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 import * as yup from "yup";
-import styled from "styled-components";
-
-//helpers
 import { getFeedListing } from "../helpers/requests";
 
 const querystring = require("querystring");
 
-const StyledFeedPage = styled.div``;
+const StyledFeedPage = styled.div`
+  padding: 20px;
+  .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+`;
 
-const FeedPage = ({ feedsStore, location }) => {
+function FeedPage({ feedsStore, location }) {
   const [initialized, setInitialized] = useState(false);
   const [url, setUrl] = useState("");
   const [listings, setListings] = useState([]);
   const [data, setData] = useState({});
-
   const getListings = async (url) => {
     try {
       const response = await getFeedListing(url);
@@ -37,29 +43,26 @@ const FeedPage = ({ feedsStore, location }) => {
       setInitialized(true);
     }
   });
-
   return (
     <StyledFeedPage>
-      <span>Hello from FeedPage</span>
       <h1 className="center title">
         <img src={data.image} /> {data.title}
       </h1>
       {listings.map((l, i) => {
         return (
-          <div key={i}>
-            <div className="card-title">{l.title}</div>
-            <div>
+          <Card key={i}>
+            <Card.Title className="card-title">{l.title}</Card.Title>
+            <Card.Body>
               <p>{l.description}</p>
               <p>{l.content}</p>
-              <button variant="primary" onClick={openLink.bind(this, l.link)}>
+              <Button variant="primary" onClick={openLink.bind(this, l.link)}>
                 Open
-              </button>{" "}
-            </div>
-          </div>
+              </Button>{" "}
+            </Card.Body>
+          </Card>
         );
       })}
     </StyledFeedPage>
   );
-};
-
+}
 export default withRouter(observer(FeedPage));
