@@ -9,18 +9,12 @@ const StyledCard = styled.div`
   float: left;
 `;
 
-function EpisodeList({
-  programImage,
-  programTitle,
-  programDescription,
-  episodes,
-}) {
+function EpisodeList({ programTitle, programDescription, episodes }) {
   const renderEpisodeList = () => {
     return (
       <div>
         <div id="menu" styles={{ float: "left" }}></div>
         <StyledCard>
-          <img src={programImage} alt={programTitle} className="card-img-top" />
           <div className="card-body">
             <h5 className="card-title">{programTitle}</h5>
             <div
@@ -45,7 +39,6 @@ function EpisodeList({
             ? episode.enclosure.url
             : "json_data is null or undefined"
         }
-        image={programImage}
         description={episode.description}
       />
     );

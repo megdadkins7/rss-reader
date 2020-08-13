@@ -16,7 +16,7 @@ function SearchHistory({ history }) {
   };
   const renderItem = (item, i) => {
     return (
-      <MenuItem index={i} onClick={handleClose}>
+      <MenuItem index={i} key={i} onClick={handleClose}>
         {item}
       </MenuItem>
     );

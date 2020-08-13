@@ -3,7 +3,6 @@ import React, { useState } from "react";
 //components
 import EpisodeList from "./components/EpisodeList";
 import UserForm from "./components/UserForm";
-import LoadingStatus from "./components/LoadingStatus";
 
 //style components
 import {
@@ -24,7 +23,6 @@ function App() {
     fetching: false,
     programTitle: null,
     programDescription: null,
-    programImage: null,
     previousFeeds: [],
     past: false,
   });
@@ -32,6 +30,36 @@ function App() {
   const getFeed = (e) => {
     setState({ fetching: !state.fetching });
     e.preventDefault();
+    const feedUrl = e.target.elements.feed_url.value;
+    let Parser = require("rss-parser");
+    let parser = new Parser({
+      customFields: {
+        item: [["enclosure", { keepArray: true }]],
+      },
+    });
+    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+
+    if (feedUrl) {
+      (async () => {
+        try {
+          let feed = await parser.parseURL(CORS_PROXY + feedUrl);
+          setState({
+            episodes: feed.items,
+            programTitle: feed.title,
+            fetching: !state.fetching,
+            programDescription: feed.description,
+            previousFeeds: [...state.previousFeeds, feedUrl],
+            past: true,
+            error: false,
+          });
+        } catch (err) {
+          console.log(err);
+          setState({ error: true, fetching: false });
+        }
+      })();
+    } else {
+      return;
+    }
   };
 
   const handleClose = () => {
@@ -78,13 +106,11 @@ function App() {
       />
       {state.error ? renderAlert() : <div />}
       {!state.past ? <p>Please enter an RSS feed</p> : <div></div>}
-      <LoadingStatus fetching={state.fetching} />
 
       <EpisodeList
         episodes={state.episodes}
         programTitle={state.programTitle}
         programDescription={state.programDescription}
-        programImage={state.programImage}
         fetching={state.fetching}
       />
     </div>
