@@ -7,10 +7,10 @@ const StyledEpisode = styled.div`
   margin-right: 1vw;
 `;
 
-const Episode = () => {
+const Episode = ({ link, title }) => {
   return (
     <StyledEpisode>
-      <a href="">title</a>
+      <a href={link}>{title}</a>
     </StyledEpisode>
   );
 };
